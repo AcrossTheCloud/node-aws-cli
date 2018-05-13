@@ -6,7 +6,8 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     python-pip \
     zip \
     jq \
-    git
+    git \
+    libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
 
 FROM node:8
 
