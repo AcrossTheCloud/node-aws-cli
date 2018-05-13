@@ -1,3 +1,3 @@
-# node-aws-cli
+# node-build-env
 
-docker image for node 8 + aws-cli.
+Docker image for node 8 with aws-cli + postgresql built in for use in test and deployment
