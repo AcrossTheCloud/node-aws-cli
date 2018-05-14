@@ -40,6 +40,9 @@ RUN echo "listen_addresses='*'" >> /etc/postgresql/10/main/postgresql.conf
 # Having installed postgres, now swap back and install node
 USER root
 
+# curl is not installed by default in ubuntu:bionic
+RUN apt-get install -y curl
+
 RUN groupadd --gid 1000 node \
   && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
 
