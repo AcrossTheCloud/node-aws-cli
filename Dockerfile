@@ -9,7 +9,14 @@ RUN apt-get update && apt-get install -y software-properties-common
 
 # Add the PostgreSQL PGP key to verify their Debian packages.
 # It should be the same key as https://www.postgresql.org/media/keys/ACCC4CF8.asc
-RUN apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8
+RUN set -ex \
+  && for key in \
+    B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8 \
+  ; do \
+    apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys "$key" || \
+    apt-key adv --keyserver hkp://ipv4.pool.sks-keyservers.net --recv-keys "$key" || \
+    apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys "$key" ; \
+  done
 
 # Add PostgreSQL's repository.
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" > /etc/apt/sources.list.d/pgdg.list
