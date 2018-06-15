@@ -30,7 +30,7 @@ RUN set -ex \
     gpg --keyserver hkp://pgp.mit.edu:80 --recv-keys "$key" ; \
   done
 
-ENV NODE_VERSION 8.11.2
+ENV NODE_VERSION 8.11.3
 
 RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   && case "${dpkgArch##*-}" in \
@@ -77,7 +77,7 @@ RUN apt-get install -y \
     git build-essential g++
 
 # python 3.6
-RUN apt-get install -y python3 python3-dev python3-pip 
+RUN apt-get install -y python3 python3-dev python3-pip
 
 RUN pip install awscli
 
