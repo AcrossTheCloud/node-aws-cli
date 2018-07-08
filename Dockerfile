@@ -13,9 +13,8 @@ RUN set -ex \
   && for key in \
     B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8 \
   ; do \
-    apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys "$key" || \
-    apt-key adv --keyserver hkp://ipv4.pool.sks-keyservers.net --recv-keys "$key" || \
-    apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys "$key" ; \
+    gpg --keyserver hkp://pool.sks-keyservers.net:80 --recv-keys "$key" || \
+    gpg --keyserver hkp://pgp.mit.edu:80 --recv-keys "$key" ; \
   done
 
 # Add PostgreSQL's repository.
