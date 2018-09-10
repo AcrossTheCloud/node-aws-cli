@@ -89,7 +89,7 @@ RUN set -ex \
     6A010C5166006599AA17F08146C2130DFD2497F5 \
   ; do \
     gpg --keyserver hkp://pool.sks-keyservers.net:80 --recv-keys "$key" || \
-    gpg adv --keyserver hkp://pgp.mit.edu:80 --recv-keys "$key" ; \
+    gpg --keyserver hkp://pgp.mit.edu:80 --recv-keys "$key" ; \
   done \
   && curl -fSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz" \
   && curl -fSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz.asc" \
