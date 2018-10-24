@@ -14,7 +14,7 @@ RUN curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 # Add PostgreSQL's repository.
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y postgresql-11 postgresql-client-11 postgresql-contrib-11 postgresql-11-postgis-2.5 postgresql-11-pgrouting postgis-2.5
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y postgresql-11 postgresql-client-11 postgresql-contrib-11 postgresql-11-postgis-2.5 postgresql-11-postgis-2.5-scripts postgresql-11-pgrouting
 
 # Note: The official Debian and Ubuntu images automatically ``apt-get clean``
 # after each ``apt-get``
