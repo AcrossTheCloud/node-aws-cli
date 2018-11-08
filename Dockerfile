@@ -105,7 +105,7 @@ RUN apt-get install -y \
     python-pip \
     zip \
     jq \
-    git build-essential g++
+    git git-lfs build-essential g++
 
 RUN pip install awscli
 
