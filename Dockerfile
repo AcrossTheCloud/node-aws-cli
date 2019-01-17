@@ -89,7 +89,12 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
 ENV YARN_VERSION 1.13.0
 
 RUN set -ex \
-  gpg --keyserver hkp://pool.sks-keyservers.net:80 --recv-keys E21930C4D0A4AA4618581F7AE074D16EB6FF4DE3 \
+  && for key in \
+  6A010C5166006599AA17F08146C2130DFD2497F5 \
+  ; do \
+  gpg --keyserver hkp://pool.sks-keyservers.net:80 --recv-keys "$key" || \
+  gpg --keyserver hkp://pgp.mit.edu:80 --recv-keys "$key" ; \
+  done \
   && curl -fSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz" \
   && curl -fSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz.asc" \
   && gpg --batch --verify yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz \
