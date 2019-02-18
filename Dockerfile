@@ -41,11 +41,12 @@ RUN echo "listen_addresses='*'" >> /etc/postgresql/11/main/postgresql.conf
 USER root
 
 # curl & gpg are not installed by default in ubuntu:bionic
-RUN apt-get install -y curl gpg
+RUN apt-get install -y curl gnupg
 
 # disable some issues whereby gpg gets confused regarding IPv6
 RUN mkdir ~/.gnupg
 RUN echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf
+RUN chmod -R go-rwx ~/.gnupg
 
 RUN groupadd --gid 1000 node \
   && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
