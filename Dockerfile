@@ -7,7 +7,7 @@ RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt bionic main restricted uni
 
 RUN apt-get update && apt-get -y upgrade
 
-RUN apt-get install -y software-properties-common curl
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common curl
 
 # Add the PostgreSQL PGP key to verify their Debian packages.
 # It should be the same key as https://www.postgresql.org/media/keys/ACCC4CF8.asc
@@ -43,7 +43,7 @@ RUN echo "listen_addresses='*'" >> /etc/postgresql/11/main/postgresql.conf
 USER root
 
 # curl & gpg are not installed by default in ubuntu:bionic
-RUN apt-get install -y curl gnupg
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y curl gnupg
 
 # disable some issues whereby gpg gets confused regarding IPv6
 RUN mkdir ~/.gnupg
@@ -111,7 +111,7 @@ RUN set -ex \
   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg \
   && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz
 
-RUN apt-get install -y \
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     python-dev \
     python-pip \
     zip \
