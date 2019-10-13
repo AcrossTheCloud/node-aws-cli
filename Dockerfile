@@ -72,7 +72,7 @@ RUN set -ex \
     gpg --keyserver hkp://pgp.mit.edu:80 --recv-keys "$key" ; \
   done
 
-ENV NODE_VERSION 12.11.1
+ENV NODE_VERSION 12.12.0
 
 RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   && case "${dpkgArch##*-}" in \
@@ -93,7 +93,7 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   && ln -s /usr/local/bin/node /usr/local/bin/nodejs \
   && /usr/local/bin/npm i -g npm 
 
-ENV YARN_VERSION 1.19.0
+ENV YARN_VERSION 1.19.1
 
 RUN set -ex \
   && for key in \
