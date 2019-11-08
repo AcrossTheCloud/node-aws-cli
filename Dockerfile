@@ -16,7 +16,7 @@ RUN curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 # Add PostgreSQL's repository.
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y postgresql-11 postgresql-client-11 postgresql-contrib-11 postgresql-11-postgis-2.5 postgresql-11-postgis-2.5-scripts postgresql-11-pgrouting
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y postgresql-12 postgresql-client-12 postgresql-contrib-12 postgresql-12-postgis-3 postgresql-12-postgis-3-scripts postgresql-12-pgrouting
 
 # Note: The official Debian and Ubuntu images automatically ``apt-get clean``
 # after each ``apt-get``
@@ -34,10 +34,10 @@ RUN    service postgresql start &&\
 
 # Adjust PostgreSQL configuration so that remote connections to the
 # database are possible.
-RUN echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/11/main/pg_hba.conf
+RUN echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/12/main/pg_hba.conf
 
 # And add ``listen_addresses`` to ``/etc/postgresql/11/main/postgresql.conf``
-RUN echo "listen_addresses='*'" >> /etc/postgresql/11/main/postgresql.conf
+RUN echo "listen_addresses='*'" >> /etc/postgresql/12/main/postgresql.conf
 
 # Having installed postgres, now swap back and install node
 USER root
