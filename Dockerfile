@@ -93,7 +93,7 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   && ln -s /usr/local/bin/node /usr/local/bin/nodejs \
   && /usr/local/bin/npm i -g npm 
 
-ENV YARN_VERSION 1.19.2
+ENV YARN_VERSION 1.21.1
 
 RUN set -ex \
   && for key in \
