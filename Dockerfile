@@ -1,9 +1,9 @@
-FROM ubuntu:bionic
+FROM ubuntu:focal
 
 # Use fast mirror
-RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt bionic main restricted universe multiverse" > /etc/apt/sources.list && \
-    echo "deb mirror://mirrors.ubuntu.com/mirrors.txt bionic-updates main restricted universe multiverse" >> /etc/apt/sources.list && \
-    echo "deb mirror://mirrors.ubuntu.com/mirrors.txt bionic-security main restricted universe multiverse" >> /etc/apt/sources.list
+RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt focal main restricted universe multiverse" > /etc/apt/sources.list && \
+    echo "deb mirror://mirrors.ubuntu.com/mirrors.txt focal-updates main restricted universe multiverse" >> /etc/apt/sources.list && \
+    echo "deb mirror://mirrors.ubuntu.com/mirrors.txt focal-security main restricted universe multiverse" >> /etc/apt/sources.list
 
 RUN apt-get update && apt-get -y upgrade
 
@@ -14,7 +14,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common
 RUN curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 
 # Add PostgreSQL's repository.
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y postgresql-12 postgresql-client-12 postgresql-contrib-12 postgresql-12-postgis-3 postgresql-12-postgis-3-scripts postgresql-12-pgrouting
 
@@ -42,7 +42,7 @@ RUN echo "listen_addresses='*'" >> /etc/postgresql/12/main/postgresql.conf
 # Having installed postgres, now swap back and install node
 USER root
 
-# curl & gpg are not installed by default in ubuntu:bionic
+# curl & gpg are not installed by default in ubuntu:focal
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y curl gnupg
 
 # disable some issues whereby gpg gets confused regarding IPv6
@@ -112,7 +112,6 @@ RUN set -ex \
   && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    python-dev \
     python-pip \
     zip \
     jq \
