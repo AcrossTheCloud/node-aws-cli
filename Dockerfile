@@ -7,7 +7,7 @@ RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt focal main restricted univ
 
 RUN apt-get update && apt-get -y upgrade
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common curl
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y curl gnupg
 
 # Add the PostgreSQL PGP key to verify their Debian packages.
 # It should be the same key as https://www.postgresql.org/media/keys/ACCC4CF8.asc
@@ -42,9 +42,6 @@ RUN echo "listen_addresses='*'" >> /etc/postgresql/12/main/postgresql.conf
 # Having installed postgres, now swap back and install node
 USER root
 
-# curl & gpg are not installed by default in ubuntu:focal
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y curl gnupg
-
 # disable some issues whereby gpg gets confused regarding IPv6
 RUN mkdir ~/.gnupg
 RUN echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf
@@ -68,11 +65,10 @@ RUN set -ex \
     A48C2BEE680E841632CD4E44F07496B3EB3C1762 \
     B9E2F5981AA6E0CD28160D9FF13993A75599653C \
   ; do \
-    gpg --keyserver hkp://pool.sks-keyservers.net:80 --recv-keys "$key" || \
-    gpg --keyserver hkp://pgp.mit.edu:80 --recv-keys "$key" ; \
+    gpg --keyserver hkp://pool.sks-keyservers.net:80 --recv-keys "$key" ; \
   done
 
-ENV NODE_VERSION 12.16.1
+ENV NODE_VERSION 12.16.2
 
 RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   && case "${dpkgArch##*-}" in \
@@ -93,31 +89,13 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   && ln -s /usr/local/bin/node /usr/local/bin/nodejs \
   && /usr/local/bin/npm i -g npm 
 
-ENV YARN_VERSION 1.22.4
-
-RUN set -ex \
-  && for key in \
-  6A010C5166006599AA17F08146C2130DFD2497F5 \
-  ; do \
-  gpg --keyserver hkp://pool.sks-keyservers.net:80 --recv-keys "$key" || \
-  gpg --keyserver hkp://pgp.mit.edu:80 --recv-keys "$key" ; \
-  done \
-  && curl -fSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz" \
-  && curl -fSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz.asc" \
-  && gpg --batch --verify yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz \
-  && mkdir -p /opt \
-  && tar -xzf yarn-v$YARN_VERSION.tar.gz -C /opt/ \
-  && ln -s /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn \
-  && ln -s /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg \
-  && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz
-
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    python-pip \
+    python3-pip \
     zip \
     jq \
     git git-lfs build-essential g++
 
-RUN pip install awscli
+RUN pip3 install awscli
 
 ENV PGUSER docker
 ENV PGPASSWORD docker
