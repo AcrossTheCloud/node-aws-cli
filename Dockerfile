@@ -68,7 +68,7 @@ RUN set -ex \
     gpg --keyserver hkp://pool.sks-keyservers.net:80 --recv-keys "$key" ; \
   done
 
-ENV NODE_VERSION 12.16.3
+ENV NODE_VERSION 12.17.0
 
 RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   && case "${dpkgArch##*-}" in \
@@ -90,12 +90,13 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   && /usr/local/bin/npm i -g npm 
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    python3-pip \
     zip \
     jq \
     git git-lfs build-essential g++
 
-RUN pip3 install awscli
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+RUN unzip awscliv2.zip
+RUN ./aws/install
 
 ENV PGUSER docker
 ENV PGPASSWORD docker
