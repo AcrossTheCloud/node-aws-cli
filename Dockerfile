@@ -68,7 +68,7 @@ RUN set -ex \
     gpg --keyserver hkp://pool.sks-keyservers.net:80 --recv-keys "$key" ; \
   done
 
-ENV NODE_VERSION 12.18.0
+ENV NODE_VERSION 12.18.1
 
 RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   && case "${dpkgArch##*-}" in \
