@@ -92,7 +92,8 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     zip \
     jq \
-    git git-lfs build-essential g++
+    git git-lfs build-essential g++ \
+    python3 python3-pip
 
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 RUN unzip awscliv2.zip
