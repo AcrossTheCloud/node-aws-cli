@@ -1,9 +1,9 @@
-FROM ubuntu:focal
+FROM ubuntu:groovy
 
 # Use fast mirror
-RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt focal main restricted universe multiverse" > /etc/apt/sources.list && \
-    echo "deb mirror://mirrors.ubuntu.com/mirrors.txt focal-updates main restricted universe multiverse" >> /etc/apt/sources.list && \
-    echo "deb mirror://mirrors.ubuntu.com/mirrors.txt focal-security main restricted universe multiverse" >> /etc/apt/sources.list
+RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt groovy main restricted universe multiverse" > /etc/apt/sources.list && \
+    echo "deb mirror://mirrors.ubuntu.com/mirrors.txt groovy-updates main restricted universe multiverse" >> /etc/apt/sources.list && \
+    echo "deb mirror://mirrors.ubuntu.com/mirrors.txt groovy-security main restricted universe multiverse" >> /etc/apt/sources.list
 
 RUN apt-get update && apt-get -y upgrade
 
@@ -14,7 +14,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y curl gnupg ca-certificates
 RUN curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 
 # Add PostgreSQL's repository.
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ groovy-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y postgresql-13 postgresql-client-13 postgresql-contrib-13 postgresql-13-postgis-3 postgresql-13-postgis-3-scripts postgresql-13-pgrouting
 
@@ -67,7 +67,7 @@ RUN set -ex \
     gpg --keyserver hkp://pool.sks-keyservers.net:80 --recv-keys "$key" ; \
   done
 
-ENV NODE_VERSION 14.16.1
+ENV NODE_VERSION 14.17.0
 
 RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   && case "${dpkgArch##*-}" in \
@@ -86,7 +86,7 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   && tar -xJf "node-v$NODE_VERSION-linux-$ARCH.tar.xz" -C /usr/local --strip-components=1 --no-same-owner \
   && rm "node-v$NODE_VERSION-linux-$ARCH.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
   && ln -s /usr/local/bin/node /usr/local/bin/nodejs \
-  && /usr/local/bin/npm i -g npm 
+  && /usr/local/bin/npm i -g npm
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     zip \
