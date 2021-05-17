@@ -1,9 +1,9 @@
-FROM ubuntu:groovy
+FROM ubuntu:hirsute
 
 # Use fast mirror
-RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt groovy main restricted universe multiverse" > /etc/apt/sources.list && \
-    echo "deb mirror://mirrors.ubuntu.com/mirrors.txt groovy-updates main restricted universe multiverse" >> /etc/apt/sources.list && \
-    echo "deb mirror://mirrors.ubuntu.com/mirrors.txt groovy-security main restricted universe multiverse" >> /etc/apt/sources.list
+RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt hirsute main restricted universe multiverse" > /etc/apt/sources.list && \
+    echo "deb mirror://mirrors.ubuntu.com/mirrors.txt hirsute-updates main restricted universe multiverse" >> /etc/apt/sources.list && \
+    echo "deb mirror://mirrors.ubuntu.com/mirrors.txt hirsute-security main restricted universe multiverse" >> /etc/apt/sources.list
 
 RUN apt-get update && apt-get -y upgrade
 
@@ -11,10 +11,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y curl gnupg ca-certificates
 
 # Add the PostgreSQL PGP key to verify their Debian packages.
 # It should be the same key as https://www.postgresql.org/media/keys/ACCC4CF8.asc
-RUN curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+#RUN curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 
 # Add PostgreSQL's repository.
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ groovy-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+#RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ hirsute-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y postgresql-13 postgresql-client-13 postgresql-contrib-13 postgresql-13-postgis-3 postgresql-13-postgis-3-scripts postgresql-13-pgrouting
 
